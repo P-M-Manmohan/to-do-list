@@ -1,8 +1,23 @@
 import React from 'react'
+import ProgressBar from "./ProgressBar"
+import { FaRegCheckCircle} from "react-icons/fa"
 
-const ListItem = () => {
+const ListItem = ({task}) => {
+  
   return (
-    <div>ListItem</div>
+    <li className='list-item'>
+      <div className='info-container'>
+      <FaRegCheckCircle className='tick' />
+      <p>{task.title}</p>
+      <ProgressBar/>
+      </div>
+    <div className='button-container'>
+    <button className='edit'>EDIT</button>
+    <button className='delete'>DELETE</button>
+
+    </div>
+
+      </li>
   )
 }
 

@@ -17,6 +17,108 @@ body{
 
 }
 
-.list-header{
+/* EDIT BUTTON in ListItem */
 
+.edit{
+    border:1.5px solid rgb(141,181,145);
+    color: rgb(141, 181, 145);
+    text-transform: uppercase;
+}
+
+.edit:hover{
+    background-color: rgb(182, 223, 186);
+}
+
+.edit:active{
+    color: rgb(255,255,255);
+    background-color: rgb(141, 181, 145);
+}
+/* DELETE BUTTON in List Item */
+
+.delete{
+    border:1.5px solid rgb(255,175,163);
+    color: rgb(255, 175, 163);
+    text-transform: uppercase;
+}
+
+.delete:hover{
+    background-color: rgb(255, 201, 193);
+}
+
+.delete:active{
+    color: rgb(255,255,255);
+    background-color: rgb(255,175,163);
+}
+
+/* ADD NEW BUTTON in List Header */
+
+.create{
+    border:1.5px solid rgb(108,115,148);
+    color: rgb(108,115,148);
+    text-transform: uppercase;
+}
+
+.create:hover{
+    background-color: rgb(131,138,172);
+}
+
+.create:active{
+    color: rgb(255,255,255);
+    background-color: rgb(108,115,148);
+}
+
+/* SING OUT BUTTON in List Header */
+
+.signout{
+    border:1.5px solid rgb(255,175,163);
+    background-color: rgb(255, 175, 163) !important;
+    color: rgb(255, 255, 255);
+    text-transform: uppercase;
+}
+
+.signout:hover{
+    background-color: rgb(175,94,94) !important; 
+    border: 1.5px solid rgb(175,94,94);
+}
+
+.signout:active{
+    border: 1.5px solid rgb(175,81,81);
+    background-color: rgb(175,81,81) !important;
+    color: rgb(255, 255, 255);
+}
+
+
+.button-container, .info-container{
+    display: flex;
+    align-items: center;
+}
+
+.button-container button{
+    margin: 0 5px;
+    padding:5px 10px;
+    border-radius: 12px;
+    font-size: 10px;
+    background-color: transparent;
+}
+/* LIST HEADER */
+
+.list-header{
+    width: 100%;
+    display: flex;
+    justify-content: space-between;
+    border-bottom: rgba(0,0,0,0.05) 1px solid;
+}
+
+.list-item{
+    width:100%;
+    margin:10px 0px;
+    border-radius: 10px;
+    box-shadow: rgba(0,0,0,0.08) 0 0 0 1px;
+    display: flex;
+    justify-content: space-between;
+}
+.tick{
+    padding: 10px;
+    width: 25px;
+    height: 25px;
 }
