@@ -1,12 +1,12 @@
 import { useState } from "react"
 
-const Modal = ({mode,setShowModal,task}) => {
+const Modal = ({mode,setShowModal,getData,task}) => {
   
   const editMode= mode==='edit'?true:false
 
 
   const [data,setData]=useState({
-    user_email:editMode ? task.user_email : "bob@gmail.com",
+    user_email:editMode ? task.user_email : "myemaill@gmail.com",
     title:editMode ? task.title : "",
     progress: editMode? task.progress : 50,
     date: editMode ? task.date: new Date()
@@ -19,20 +19,48 @@ const Modal = ({mode,setShowModal,task}) => {
       [name]: value
     }))
   }
-  const postData=async ()=>{
+
+  // create new todo
+  const postData=async (e)=>{
+    e.preventDefault()
     try{
-        console.log("posting data")
-        const response=await fetch(`http://localhost:4000/todos`,{
+        const response=await fetch(`${process.env.REACT_APP_SERVERURL}/todos`,{
+          mode:"cors",
           method:"POST",
-          headers :{'content-type':'application/json'},
+          headers:{"Content-Type":"application/json"},
           body: JSON.stringify(data),
-          mode: "cors"
         });
-      console.log(response);
+        if(response.status===200){
+          setShowModal(false)
+          getData()
+        }
+    }catch(err){
+      console.log("error in fetching",err)
+    }
+  }
+
+
+  // edit todo
+  
+  const editData=async(e)=>{
+    e.preventDefault()
+    try{
+        const response=await fetch(`${process.env.REACT_APP_SERVERURL}/todos/${task.id}`,{
+        mode:"cors",
+        method:"PUT",
+        headers:{"Content-Type":"application/json"},
+        body: JSON.stringify(data),
+      });
+      if(response.status===200){
+        setShowModal(false)
+        getData()
+      }
+
     }catch(err){
       console.error(err)
     }
   }
+  
 
   return (
     <div className='overlay'>
@@ -62,7 +90,8 @@ const Modal = ({mode,setShowModal,task}) => {
           value={data.progress}
           onChange={handleChange}
           />
-          <input className={mode} onClick={editMode? null: postData} type='submit'/>
+          {/*  */}
+          <input className={mode} onClick={editMode? editData: postData} type='submit'/>
         </form>
       </div>
     </div>
