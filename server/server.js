@@ -1,5 +1,5 @@
 import express from "express"
-import 'node-libs-browser/node_modules/crypto-browserify';
+// import 'node-libs-browser/node_modules/crypto-browserify';
 import pool from "./db.js"
 import cors from "cors"
 import { v4 as uuidv4 } from "uuid";
