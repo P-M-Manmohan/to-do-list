@@ -3,8 +3,7 @@
   "version": "1.0.0",
   "scripts": {
     "build": "if-env TYPE=server && (cd server && npm i )|| (cd client && npm i)",
-    "start": " if-env TYPE=server && node ./server/server.js",
-    "client": "cd client && npm start"
+    "start": " if-env TYPE=server && (node ./server/server.js) || (cd client && npm start)",
   },
   "author": "",
   "license": "ISC",
