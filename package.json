@@ -3,7 +3,7 @@
   "version": "1.0.0",
   "scripts": {
     "build": "if-env TYPE=server && (cd server && npm i )|| (cd client && npm i)",
-    "server": "node ./server/server.js",
+    "start": " if-env TYPE=server && node ./server/server.js",
     "client": "cd client && npm start"
   },
   "author": "",
