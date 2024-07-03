@@ -1,5 +1,5 @@
 import express from "express"
-import pool from "../db.js"
+import pool from "../../db.js"
 import cors from "cors"
 import { v4 as uuidv4 } from "uuid";
 import bcrypt from 'bcrypt';
