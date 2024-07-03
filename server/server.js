@@ -3,8 +3,8 @@ import pool from "./db.js"
 import cors from "cors"
 import { v4 as uuidv4 } from "uuid";
 import bcrypt from 'bcrypt';
-import pkg from 'jsonwebtoken'
-const { jwt } = pkg;
+import pkg from 'jsonwebtoken';
+const {jwt,verify,sign} = pkg;
 
 const PORT= process.env.PORT ?? 4000
 const app=express();
@@ -63,27 +63,37 @@ app.delete("/todos/:id",async(req,res)=>{
 //signup
 app.post('/signup',async(req,res)=>{
     const {email,password} = req.body
-    const salt=bcrypt.genSaltSync(10)
-    const hashedPassword = bcrypt.hashSync(password,salt)
+    const salt= bcrypt.genSaltSync(10)
+    const hashedPassword = await bcrypt.hash(password,salt)
     try{
         const result= await pool.query('INSERT INTO users (email,hashed_password) VALUES ($1,$2)',
             [email,hashedPassword]
         )
-        
-        const token=jwt.sign({email}, 'secret' ,{expiresIn: '1hr'})
-
+        const token= sign({email}, 'JWT_SECRET' ,{expiresIn: '1hr'})
         res.json({ email,token })
     }catch(err){
         console.error(err)
+        res.json({detail: err.detail})
     }
 })
 
 //login
 app.post('/login',async(req,res)=>{
     const {email,password} = req.body
-    
     try{
-
+        const user=await pool.query("SELECT * FROM users WHERE email=$1",[email])
+        // console.log(user.rows[0])
+        if(!user.rows[0]) {
+            res.json({ detail: "User does not exist!" })
+        }else{
+        const success=await bcrypt.compare(password,user.rows[0].hashed_password)
+            if (success) {
+                const token= sign({email}, 'JWT_SECRET' ,{expiresIn: '1hr'})
+                res.json({email : user.rows[0].email , token})
+            }else{
+                res.json({detail : "Login Failed"})
+            }
+        }
     }catch(err){
         console.error(err)
     }

@@ -1,13 +1,13 @@
 import React, { useState } from 'react'
+import {useCookies} from 'react-cookie'
 
 const Auth = () => {
+  const [cookies, setCookie, removeCookie] = useCookies(null)
   const [error,setError]=useState(null)
   const [email, setEmail]=useState(null)
   const [password, setPassword]=useState(null)
   const [confirmPassword, setConfirmPassword]=useState(null)
   const [isLogin,setIsLogin]=useState(true)
-
-  console.log(email,password,confirmPassword)
 
   const viewLogin=(status)=>{
     setError(null)
@@ -23,15 +23,27 @@ const Auth = () => {
       return
     }
 
+    const userData={
+      email: email,
+      password: password
+    }
     const response=await fetch(`${process.env.REACT_APP_SERVERURL}/${endpoint}`,{
-      mode: 'cors',
-      method: "POST",
-      heaeders:{ 'Content-Type' : 'application/json' },
-      body: JSON.stringify({email,password})
+      mode:"cors",
+      method:"POST",
+      headers:{"Content-Type":"application/json"},
+      body: JSON.stringify(userData),
     })
     const data=await response.json()
-    console.log(data)
-  }
+    if(data.detail){
+    setError(data.detail)
+    }else{
+      setCookie('Email',data.email)
+      setCookie('AuthToken',data.token)
+      window.location.reload()
+    }
+}
+
+
 
 
   return (
@@ -39,7 +51,7 @@ const Auth = () => {
       <div className='auth-container-box'>
 
         <form>
-          <h2>{isLogin? "Please Login": "Please Sign up"}</h2>
+          <h2>{isLogin? "Please Log In": "Please Sign up"}</h2>
 
           <input 
           type='email' 
@@ -65,7 +77,7 @@ const Auth = () => {
           onClick={(e)=>handleSubmit(e,isLogin? 'login':'signup')
           }/>
 
-          {error && <p>{error}</p>}
+          {error?<p>{error}</p>:null}
         </form>
 
         <div className='auth-options'>

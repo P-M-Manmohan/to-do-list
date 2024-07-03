@@ -18,10 +18,10 @@ const ListItem = ({task,getData}) => {
     <li className='list-item'>
       <div className='info-container'>
       <FaRegCheckCircle className='tick' />
-      <p>{task.title}</p>
-      <ProgressBar/>
+      <p className='task-title'>{task.title}</p>
       </div>
     <div className='button-container'>
+      <ProgressBar progress={task.progress}/>
     <button className='edit' onClick={()=>setShowModal(true)}>EDIT</button>
     <button className='delete' onClick={deleteItem}>DELETE</button>
     {showModal && <Modal mode='edit' setShowModal={setShowModal} getData={getData} task={task}/>}
