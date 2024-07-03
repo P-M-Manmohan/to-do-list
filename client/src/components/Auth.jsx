@@ -21,6 +21,9 @@ const Auth = () => {
     if(!isLogin && password !==confirmPassword ){
       setError('Passwords dont match!')
       return
+    }else if(!isLogin && password.length<8){
+      setError('Password too short!')
+      return
     }
 
     const userData={
