@@ -1,5 +1,4 @@
 import express from "express"
-// import 'node-libs-browser/node_modules/crypto-browserify';
 import pool from "./db.js"
 import cors from "cors"
 import { v4 as uuidv4 } from "uuid";
@@ -7,7 +6,7 @@ import bcrypt from 'bcrypt';
 import pkg from 'jsonwebtoken';
 const {jwt,verify,sign} = pkg;
 
-const PORT= process.env.PORT ?? 4000
+const PORT= process.env.PORT ?? 8000
 const app=express();
 
 app.use(cors())
