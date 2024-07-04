@@ -7,7 +7,7 @@ const ListItem = ({task,getData}) => {
   
   const [showModal,setShowModal]=useState(false)
   const deleteItem=async()=>{
-    const response= await fetch(`http://localhost:4000/todos/${task.id}`,{
+    const response= await fetch(`${process.env.REACT_APP_SERVERURL}/todos/${task.id}`,{
       method: "DELETE"
     })
     if(response.status===200){
