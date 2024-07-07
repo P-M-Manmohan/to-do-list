@@ -1,6 +1,11 @@
-import { useState } from 'react'
-import Modal from './Modal'
-import { useCookies } from 'react-cookie'
+// import { useState } from 'react'
+// import Modal from './Modal'
+// import { useCookies } from 'react-cookie'
+
+
+const { useState } = require('react');
+const Modal = require('./Modal');
+const { useCookies } = require('react-cookie');
 
 const ListHeader = ({ListName,getData}) => {
   const [cookies, setCookie, removeCookie] = useCookies(null)
@@ -24,4 +29,4 @@ const ListHeader = ({ListName,getData}) => {
   )
 }
 
-export default ListHeader
+module.exports = ListHeader

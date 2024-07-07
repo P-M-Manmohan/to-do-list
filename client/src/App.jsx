@@ -1,8 +1,15 @@
-import { useEffect, useState } from "react"
-import ListHeader from "./components/ListHeader"
-import ListItem from "./components/ListItem"
-import Auth from "./components/Auth"
-import { useCookies } from 'react-cookie'
+// import { useEffect, useState } from "react"
+// import ListHeader from "./components/ListHeader"
+// import ListItem from "./components/ListItem"
+// import Auth from "./components/Auth"
+// import { useCookies } from 'react-cookie'
+
+const { useEffect, useState } = require("react");
+const ListHeader = require("./components/ListHeader");
+const ListItem = require("./components/ListItem");
+const Auth = require("./components/Auth");
+const { useCookies } = require('react-cookie');
+
 
 const App=()=> {
   const [cookies, setCookie, removeCookie]=useCookies(null)
@@ -46,4 +53,4 @@ const App=()=> {
   );
 }
 
-export default App;
+module.exports = App;

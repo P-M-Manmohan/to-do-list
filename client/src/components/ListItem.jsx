@@ -1,7 +1,13 @@
-import { useState } from 'react'
-import ProgressBar from "./ProgressBar"
-import { FaRegCheckCircle} from "react-icons/fa"
-import Modal from './Modal'
+// import { useState } from 'react'
+// import ProgressBar from "./ProgressBar"
+// import { FaRegCheckCircle} from "react-icons/fa"
+// import Modal from './Modal'
+
+const { useState } = require('react');
+const ProgressBar = require('./ProgressBar');
+const { FaRegCheckCircle } = require('react-icons/fa');
+const Modal = require('./Modal');
+
 
 const ListItem = ({task,getData}) => {
   
@@ -31,4 +37,4 @@ const ListItem = ({task,getData}) => {
   )
 }
 
-export default ListItem
+module.exports =ListItem

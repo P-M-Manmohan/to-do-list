@@ -1,5 +1,9 @@
-import React, { useState } from 'react'
-import {useCookies} from 'react-cookie'
+// import React, { useState } from 'react'
+// import {useCookies} from 'react-cookie'
+
+const React = require('react');
+const useState = React.useState;
+const { useCookies } = require('react-cookie');
 
 const Auth = () => {
   const [cookies, setCookie, removeCookie] = useCookies(null)
@@ -101,4 +105,4 @@ const Auth = () => {
   )
 }
 
-export default Auth
+module.exports = Auth

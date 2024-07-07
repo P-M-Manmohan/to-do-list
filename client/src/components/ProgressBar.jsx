@@ -1,4 +1,4 @@
-import React from 'react'
+const { useState } = require('react');
 
 const ProgressBar = ({progress}) => {
 
@@ -22,4 +22,4 @@ const ProgressBar = ({progress}) => {
   )
 }
 
-export default ProgressBar
+module.exports = ProgressBar;
