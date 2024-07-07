@@ -8,49 +8,51 @@ const { useEffect, useState } = require("react");
 const ListHeader = require("./components/ListHeader");
 const ListItem = require("./components/ListItem");
 const Auth = require("./components/Auth");
-const { useCookies } = require('react-cookie');
+const { useCookies } = require("react-cookie");
 
+const App = () => {
+    const [cookies, setCookie, removeCookie] = useCookies(null);
+    const userEmail = cookies.Email;
+    const authToken = cookies.AuthToken;
+    const [tasks, setTasks] = useState(null);
 
-const App=()=> {
-  const [cookies, setCookie, removeCookie]=useCookies(null)
-  const userEmail= cookies.Email
-  const authToken= cookies.AuthToken;
-  const [tasks,setTasks]=useState(null)
-
-  const getData= async ()=>{
-    try{
-        const result = await fetch(`${process.env.REACT_APP_SERVERURL}/todos/${userEmail}`)
-        const json=await result.json();
-        setTasks(json)
-        
-        }catch(err){
-          console.log(err)
+    const getData = async () => {
+        try {
+            const result = await fetch(
+                `${process.env.REACT_APP_SERVERURL}/todos/${userEmail}`
+            );
+            const json = await result.json();
+            setTasks(json);
+        } catch (err) {
+            console.log(err);
         }
-    }
+    };
 
-    useEffect(()=> 
-    {
-      if(authToken){
-      getData()
-      }
-    }  ,[])
-  
-  const sortedTasks =tasks?.sort((a,b)=> new Date(a.date)-new Date(b.date))
-  return (
-    <div className="app">
+    useEffect(() => {
+        if (authToken) {
+            getData();
+        }
+    }, []);
 
-      {!authToken && <Auth/>}
+    const sortedTasks = tasks?.sort(
+        (a, b) => new Date(a.date) - new Date(b.date)
+    );
+    return (
+        <div className="app">
+            {!authToken && <Auth />}
 
-      { authToken&&
-      <>
-      <ListHeader  ListName={'Holiday'} getData={getData}/>
-      <p className="username">Welcome back {userEmail}</p>
-      { sortedTasks?.map((task)=><ListItem key={task.id} task={task} getData={getData}/>) }
-      <p className="copyright">© Project 2</p>
-      </>
-      }
-    </div> 
-  );
-}
+            {authToken && (
+                <>
+                    <ListHeader ListName={"Holiday"} getData={getData} />
+                    <p className="username">Welcome back {userEmail}</p>
+                    {sortedTasks?.map((task) => (
+                        <ListItem key={task.id} task={task} getData={getData} />
+                    ))}
+                    <p className="copyright">© Project 2</p>
+                </>
+            )}
+        </div>
+    );
+};
 
 module.exports = App;
