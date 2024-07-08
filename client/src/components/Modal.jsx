@@ -1,8 +1,8 @@
 // import { useState } from "react"
 // import { useCookies } from "react-cookie"
 
-const { useState } = require("react");
-const { useCookies } = require("react-cookie");
+import  { useState } from "react";
+import  { useCookies } from "react-cookie";
 
 const Modal = ({mode,setShowModal,getData,task}) => {
   const [cookies, setCookie,removeCookie]=useCookies(null)
@@ -101,4 +101,4 @@ const Modal = ({mode,setShowModal,getData,task}) => {
     </div>
   )
 }
-module.exports=Modal;
+export default Modal;

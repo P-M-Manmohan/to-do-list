@@ -1,4 +1,4 @@
-const { useState } = require('react');
+import { useState } from 'react';
 
 const ProgressBar = ({progress}) => {
 
@@ -10,6 +10,7 @@ const ProgressBar = ({progress}) => {
   ]
   
   const color=colors[Math.floor(Math.random())*colors.length]
+
   return (
     <div className='outer-bar'>
       <div 
@@ -22,4 +23,4 @@ const ProgressBar = ({progress}) => {
   )
 }
 
-module.exports = ProgressBar;
+export default  ProgressBar;

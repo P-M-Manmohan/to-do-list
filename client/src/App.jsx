@@ -4,11 +4,11 @@
 // import Auth from "./components/Auth"
 // import { useCookies } from 'react-cookie'
 
-const { useEffect, useState } = require("react");
-const ListHeader = require("./components/ListHeader");
-const ListItem = require("./components/ListItem");
-const Auth = require("./components/Auth");
-const { useCookies } = require("react-cookie");
+import ListHeader from "./components/ListHeader";
+import ListItem from "./components/ListItem";
+import Auth from "./components/Auth";
+import  { useEffect, useState } from "react";
+import  { useCookies } from "react-cookie";
 
 const App = () => {
     const [cookies, setCookie, removeCookie] = useCookies(null);
@@ -55,4 +55,4 @@ const App = () => {
     );
 };
 
-module.exports = App;
+export default App;

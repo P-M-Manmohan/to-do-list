@@ -4,11 +4,11 @@
 // import { fileURLToPath } from 'url';
 // import { dirname } from 'path';
 
-const { app, BrowserWindow } = import("electron");
-const path = import("path");
-const isDev = import("electron-is-dev");
-const { fileURLToPath } = import("url");
-const { dirname } = import("path");
+import  { app, BrowserWindow } from "electron";
+import  path from "path";
+import  isDev from "electron-is-dev";
+import  { fileURLToPath } from "url";
+import  { dirname } from "path";
 
 // const __filename = fileURLToPath(import.meta.url);
 // const __dirname = dirname(__filename);

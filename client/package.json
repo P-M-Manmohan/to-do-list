@@ -3,10 +3,10 @@
     "version": "0.1.0",
     "private": true,
     "main": "public/electron.js",
-    "type": "commonjs",
     "description": "Test todo list app",
     "license": "MIT",
     "author": "Manmohan P M",
+    "type": "module",
     "build": {
         "appId": "com.example.myapp",
         "productName": "My Electron App",
@@ -36,6 +36,7 @@
     },
     "scripts": {
         "electron": "electron .",
+        "start-url": "react-scripts start",
         "dist": "electron-builder",
         "start": "electron-forge start",
         "build": "react-scripts build",
