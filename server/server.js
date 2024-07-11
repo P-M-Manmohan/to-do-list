@@ -99,7 +99,7 @@ app.post('/login',async(req,res)=>{
     }
 })
 
-app.post('/new-list',async(req,res)=>{
+app.post('/lists/new',async(req,res)=>{
     const { user_email,progress,title }=req.body;
     const id=uuidv4()
     try{
@@ -111,7 +111,7 @@ app.post('/new-list',async(req,res)=>{
 })
 
 //get lists
-app.get('/todos/:userEmail', async (req,res)=>{
+app.get('/lists/:userEmail', async (req,res)=>{
     const { userEmail }= req.params
     try{
         const result=await pool.query('SELECT * FROM lists WHERE user_email=$1',[userEmail])
@@ -120,6 +120,29 @@ app.get('/todos/:userEmail', async (req,res)=>{
         console.log(err)
     }
 })
+
+//delete list
+app.delete("/lists/:id",async(req,res)=>{
+    const { id }=req.params;
+    try{
+        const del=await pool.query("DELETE FROM lists WHERE id=$1",[id])
+        res.json(del)
+    }catch(err){
+        console.error(err)
+    }
+})
+
+app.put('/lists/:id', async (req,res)=>{
+    const { id }=req.params
+    const { user_email,progress,title,date}=req.body
+    try{
+        const editTodo=await pool.query('UPDATE lists SET user_email=$1, title=$2, progress=$3, date=$4 WHERE id=$5' ,[user_email,title,progress,date,id])
+        res.json(editTodo)
+    }catch(err){
+        console.error(err)
+    }
+})
+
 
 app.listen(PORT, ()=>{
     console.log(`Server is running on ${PORT}`)

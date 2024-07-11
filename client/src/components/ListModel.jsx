@@ -2,7 +2,7 @@ import React from 'react'
 import { useState } from 'react'
 import { useCookies } from 'react-cookie'
 
-const ListModel = ({ mode,setShowModal,list }) => {
+const ListModel = ({ mode,setShowModal,getLists,list }) => {
     const [cookies, setCookie,removeCookie]=useCookies(null)
     const editMode= mode==='edit'?true:false
 
@@ -26,7 +26,7 @@ const ListModel = ({ mode,setShowModal,list }) => {
   const postData=async (e)=>{
     e.preventDefault()
     try{
-        const response=await fetch(`${process.env.REACT_APP_SERVERURL}/new-list`,{
+        const response=await fetch(`${process.env.REACT_APP_SERVERURL}/lists/new`,{
           mode:"cors",
           method:"POST",
           headers:{"Content-Type":"application/json"},
@@ -34,7 +34,7 @@ const ListModel = ({ mode,setShowModal,list }) => {
         });
         if(response.status===200){
           setShowModal(false)
-          getData()
+          getLists()
         }
     }catch(err){
       console.log("error in fetching",err)
@@ -46,7 +46,7 @@ const ListModel = ({ mode,setShowModal,list }) => {
   const editData=async(e)=>{
     e.preventDefault()
     try{
-        const response=await fetch(`${process.env.REACT_APP_SERVERURL}/todos/${list.id}`,{
+        const response=await fetch(`${process.env.REACT_APP_SERVERURL}/lists/${list.id}`,{
         mode:"cors",
         method:"PUT",
         headers:{"Content-Type":"application/json"},
@@ -54,7 +54,7 @@ const ListModel = ({ mode,setShowModal,list }) => {
       });
       if(response.status===200){
         setShowModal(false)
-        getData()
+        getLists()
       }
 
     }catch(err){

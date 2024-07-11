@@ -7,7 +7,7 @@ import Modal from './Modal';
 import { useState } from 'react';
 import { useCookies } from 'react-cookie';
 
-const ListHeader = ({list,ListName,getData,listGroup}) => {
+const ListHeader = ({ListName,getData}) => {
   const [cookies, setCookie, removeCookie] = useCookies(null)
   const [showModal,setShowModal]=useState(false)
 
@@ -24,7 +24,7 @@ const ListHeader = ({list,ListName,getData,listGroup}) => {
         <button className='create' onClick={()=>setShowModal(true)}> ADD NEW </button>
         <button className='signout' onClick={signOut}> SIGN OUT</button>
       </div>
-      {showModal && (<Modal list={list} mode='create' listGroup={listGroup} setShowModal={setShowModal} getData={getData}/>) }
+      {showModal && (<Modal mode='create' setShowModal={setShowModal} getData={getData}/>) }
     </div>
   )
 }

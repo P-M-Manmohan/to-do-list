@@ -10,6 +10,7 @@ import Auth from "./components/Auth";
 import  { useEffect, useState } from "react";
 import  { useCookies } from "react-cookie";
 import Lists from "./components/Lists.jsx";
+import ListContainer from "./components/ListContainer.jsx";
 
 const App = () => {
     const [cookies, setCookie, removeCookie] = useCookies(null);
@@ -18,19 +19,21 @@ const App = () => {
     const [tasks, setTasks] = useState(null);
     const [list, setList] = useState(null);
 
-    const getData = async () => {
-        try {
-            const result = await fetch(
-                `${process.env.REACT_APP_SERVERURL}/todos/${userEmail}`
-            );
-            const json = await result.json();
-            setTasks(json);
-        } catch (err) {
-            console.log(err);
-        }
-    };
+
+    // const getData = async () => {
+    //     try {
+    //         const result = await fetch(
+    //             `${process.env.REACT_APP_SERVERURL}/todos/${userEmail}`
+    //         );
+    //         const json = await result.json();
+    //         setTasks(json);
+    //     } catch (err) {
+    //         console.log(err);
+    //     }
+    // };
 
     //get lists
+
     const getLists = async () => {
         try {
             const result = await fetch(
@@ -38,6 +41,7 @@ const App = () => {
             );
             const json = await result.json();
             setList(json);
+            console.log(list)
         } catch (err) {
             console.log(err);
         }
@@ -46,7 +50,8 @@ const App = () => {
 
     useEffect(() => {
         if (authToken) {
-            getData();
+            // getData();
+            getLists();
         }
     }, []);
 
@@ -54,19 +59,24 @@ const App = () => {
         (a, b) => new Date(a.date) - new Date(b.date)
     );
 
+    // console.log(list)
     return (
         <div className="app">
             {!authToken && <Auth />}
 
             {authToken && (
                 <>
-                <Lists getData={getData} getLists={getLists}/>
+                <Lists getLists={getLists}/>
+                {/* { console.log(list) } */}
                 <p className="username">Welcome back {userEmail}</p>
-                    
-                    <ListHeader ListName={"Holiday"} getData={getData} />
+                    {list?.map((list) => (
+                        <ListContainer key={list.id} lists={list} getLists={getLists} />
+                    ))}
+
+                    {/* <ListHeader ListName={"Holiday"} getData={getData} />
                     {sortedTasks?.map((task) => (
                         <ListItem key={task.id} task={task} getData={getData} />
-                    ))}
+                    ))} */}
 
                     <p className="copyright">© Project 2</p>
                 </>
