@@ -99,6 +99,28 @@ app.post('/login',async(req,res)=>{
     }
 })
 
+app.post('/new-list',async(req,res)=>{
+    const { user_email,progress,title }=req.body;
+    const id=uuidv4()
+    try{
+        const new_list=await pool.query("INSERT INTO lists (id,title,progress,user_email) VALUES ($1,$2,$3,$4)",[id,title,progress,user_email])
+        res.json(new_list)
+    }catch(err){
+        console.error(err);
+    }
+})
+
+//get lists
+app.get('/todos/:userEmail', async (req,res)=>{
+    const { userEmail }= req.params
+    try{
+        const result=await pool.query('SELECT * FROM lists WHERE user_email=$1',[userEmail])
+        res.json(result.rows)
+    }catch(err){
+        console.log(err)
+    }
+})
+
 app.listen(PORT, ()=>{
     console.log(`Server is running on ${PORT}`)
 })

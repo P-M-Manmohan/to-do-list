@@ -1,32 +1,30 @@
-// import { useState } from 'react'
-// import Modal from './Modal'
-// import { useCookies } from 'react-cookie'
-
-
-import Modal from './Modal';
-import { useState } from 'react';
+import React from 'react'
+import Modal from './Modal'
+import { useState } from 'react'
 import { useCookies } from 'react-cookie';
+import ListModel from './ListModel';
 
-const ListHeader = ({list,ListName,getData,listGroup}) => {
-  const [cookies, setCookie, removeCookie] = useCookies(null)
+const ListContainer = ( { getData } ) => {
   const [showModal,setShowModal]=useState(false)
+  const [cookies, setCookie, removeCookie] = useCookies(null)
+
 
   const signOut=()=>{
     removeCookie('Email')
     removeCookie('AuthToken')
     window.location.reload()
   }
-
+  
   return (
     <div className='list-header'>
-      <h1>{ListName}</h1>
+      <h1>Lists</h1>
       <div className='button-container'>
         <button className='create' onClick={()=>setShowModal(true)}> ADD NEW </button>
         <button className='signout' onClick={signOut}> SIGN OUT</button>
       </div>
-      {showModal && (<Modal list={list} mode='create' listGroup={listGroup} setShowModal={setShowModal} getData={getData}/>) }
+      {showModal && (<ListModel  mode='create' setShowModal={setShowModal} getData={getData}/>) }
     </div>
   )
 }
 
-export default ListHeader
+export default ListContainer
