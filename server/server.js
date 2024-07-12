@@ -27,10 +27,10 @@ app.get('/todos/:userEmail', async (req,res)=>{
 
 //create new todo
 app.post('/todos',async(req,res)=>{
-    const { user_email,progress,title,date}=req.body
+    const { user_email,progress,title,date,listId}=req.body
     const id=uuidv4()
     try{
-        const newToDo=await pool.query("INSERT INTO todos (id,user_email,title,progress,date) VALUES ($1,$2,$3,$4,$5)",[id,user_email,title,progress,date])
+        const newToDo=await pool.query("INSERT INTO todos (id,user_email,title,progress,date,list_id) VALUES ($1,$2,$3,$4,$5,$6)",[id,user_email,title,progress,date,listId])
         res.json(newToDo)
     }catch(err){
         console.error(err)
@@ -99,11 +99,13 @@ app.post('/login',async(req,res)=>{
     }
 })
 
+
+//create new lists
 app.post('/lists/new',async(req,res)=>{
-    const { user_email,progress,title }=req.body;
+    const { user_email,progress,title,date }=req.body;
     const id=uuidv4()
     try{
-        const new_list=await pool.query("INSERT INTO lists (id,title,progress,user_email) VALUES ($1,$2,$3,$4)",[id,title,progress,user_email])
+        const new_list=await pool.query("INSERT INTO lists (id,title,progress,user_email,date) VALUES ($1,$2,$3,$4,$5)",[id,title,progress,user_email,date])
         res.json(new_list)
     }catch(err){
         console.error(err);
@@ -138,6 +140,16 @@ app.put('/lists/:id', async (req,res)=>{
     try{
         const editTodo=await pool.query('UPDATE lists SET user_email=$1, title=$2, progress=$3, date=$4 WHERE id=$5' ,[user_email,title,progress,date,id])
         res.json(editTodo)
+    }catch(err){
+        console.error(err)
+    }
+})
+
+app.get('/lists/:id',async(req,res)=>{
+    const { id }=req.params
+    try{
+        const result=await pool.query('SELECT * FROM lists WHERE id=$1',[id])
+        console.log(result)
     }catch(err){
         console.error(err)
     }

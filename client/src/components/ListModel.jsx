@@ -20,11 +20,13 @@ const ListModel = ({ mode,setShowModal,getLists,list }) => {
       ...data,
       [name]: value
     }))
+    console.log(data)
   }
 
   // create new list
   const postData=async (e)=>{
     e.preventDefault()
+    console.log(data)
     try{
         const response=await fetch(`${process.env.REACT_APP_SERVERURL}/lists/new`,{
           mode:"cors",

@@ -6,26 +6,25 @@ import ListContainer from "../components/ListContainer.jsx";
 import Todo  from "./Todo.jsx"
 import { Link } from 'react-router-dom'
 
-const App = ({ getLists }) => {
+const Home = () => {
     const [cookies, setCookie, removeCookie] = useCookies(null);
     const userEmail = cookies.Email;
     const authToken = cookies.AuthToken;
     const [tasks, setTasks] = useState(null);
     const [list, setList] = useState(null);
-
-    // const getLists = async () => {
-    //     try {
-    //         const result = await fetch(
-    //             `${process.env.REACT_APP_SERVERURL}/lists/${userEmail}`
-    //         );
-    //         const json = await result.json();
-    //         setList(json);
-    //         console.log(list)
-    //     } catch (err) {
-    //         console.log(err);
-    //     }
-    // };
-
+    
+    const getLists = async () => {
+        try {
+            const result = await fetch(
+                `${process.env.REACT_APP_SERVERURL}/lists/${userEmail}`
+            );
+            const json = await result.json();
+            setList(json);
+            console.log(list)
+        } catch (err) {
+            console.log(err);
+        }
+    };
 
     useEffect(() => {
         if (authToken) {
@@ -33,7 +32,7 @@ const App = ({ getLists }) => {
         }
     }, []);
 
-    const sortedTasks = tasks?.sort(
+    const sortedLists = list?.sort(
         (a, b) => new Date(a.date) - new Date(b.date)
     );
 
@@ -45,8 +44,8 @@ const App = ({ getLists }) => {
                 <>
                 <Lists getLists={getLists}/>
                 <p className="username">Welcome back {userEmail}</p>
-                    {list?.map((list) => (
-                        <Link
+                    {sortedLists?.map((list) => (
+                        <Link style={{textDecoration:'none'}}
                             to={`/list/${list.id}`}
                         >
                         <ListContainer key={list.id} lists={list} getLists={getLists} />
@@ -60,4 +59,4 @@ const App = ({ getLists }) => {
     );
 };
 
-export default App;
+export default Home;

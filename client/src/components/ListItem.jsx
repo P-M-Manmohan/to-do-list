@@ -9,7 +9,7 @@ import { useState } from 'react';
 import { FaRegCheckCircle } from 'react-icons/fa';
 
 
-const ListItem = ({task,getData}) => {
+const ListItem = ({task,getData,listId}) => {
   
   const [showModal,setShowModal]=useState(false)
   const deleteItem=async()=>{
@@ -30,7 +30,7 @@ const ListItem = ({task,getData}) => {
       <ProgressBar progress={task.progress}/>
     <button className='edit' onClick={()=>setShowModal(true)}>EDIT</button>
     <button className='delete' onClick={deleteItem}>DELETE</button>
-    {showModal && <Modal mode='edit' setShowModal={setShowModal} getData={getData} task={task}/>}
+    {showModal && <Modal mode='edit' listId={listId} setShowModal={setShowModal} getData={getData} task={task}/>}
     </div>
 
       </li>
