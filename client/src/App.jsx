@@ -1,6 +1,5 @@
 import React from 'react'
 import { Route,createBrowserRouter,createRoutesFromElements,RouterProvider } from 'react-router-dom'
-import Auth from './pages/Auth'
 import Home from './pages/Home'
 import Todo from './pages/Todo'
 
@@ -11,9 +10,10 @@ const App = () => {
 
     const router=createBrowserRouter(
         createRoutesFromElements(
-            <Route path='/' element={<Home/>}>
-                <Route path='/list/:id' element={ <Todo /> }/>
-            </Route>)
+            <>
+            <Route path='/' element={<Home/>}/>
+            <Route path='/list/:id' element={ <Todo /> }/>
+            </>)
     )
     return <RouterProvider router={router} />
 }

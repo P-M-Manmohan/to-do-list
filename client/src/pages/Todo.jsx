@@ -3,6 +3,7 @@ import { useCookies } from 'react-cookie';
 import ListHeader from '../components/ListHeader.jsx'
 import ListItem  from '../components/ListItem.jsx'
 import { useParams } from 'react-router-dom';
+import Auth from './Auth.jsx'
 
 const Todo = () => {
     const [cookies, setCookie, removeCookie] = useCookies(null);
@@ -10,7 +11,6 @@ const Todo = () => {
     const authToken = cookies.AuthToken;
     const [tasks, setTasks] = useState(null);
     const { id }=useParams();
-
     const getData = async () => {
         try {
             const result = await fetch(
@@ -35,13 +35,24 @@ const Todo = () => {
 
 
   return (
-    <>
+<div className='app'>
+
+    {!authToken && <Auth />}
+
+    {authToken && (
+        <>
     <ListHeader ListName='holiday' getData={getData} />
-    {sortedTasks?.map((task) => (
+
+    {
+    sortedTasks?.map((task) => (
         <ListItem key={task.id} task={task} listId={id} getData={getData} />
-    ))}
+    ))
+    }
     </>
-    )
+)}
+</div>
+)
+
 }
 
 

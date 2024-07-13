@@ -4,7 +4,7 @@
 import  { useState } from "react";
 import  { useCookies } from "react-cookie";
 
-const Modal = ({ mode,listId,setShowModal,getData,task}) => {
+const Modal = ({ mode,Id,setShowModal,getData,task}) => {
   const [cookies, setCookie,removeCookie]=useCookies(null)
   const editMode= mode==='edit'?true:false
 
@@ -14,9 +14,9 @@ const Modal = ({ mode,listId,setShowModal,getData,task}) => {
     title:editMode ? task.title : "",
     progress: editMode? task.progress : 50,
     date: editMode ? task.date: new Date(),
-    listId: listId
+    listId: Id
   })
-
+  
   const handleChange= (e)=>{
     const {name, value}=e.target;
     setData(data=>({
@@ -24,6 +24,8 @@ const Modal = ({ mode,listId,setShowModal,getData,task}) => {
       [name]: value
     }))
   }
+
+  console.log(Id)
 
   // create new todo
   const postData=async (e)=>{

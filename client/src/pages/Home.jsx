@@ -45,7 +45,7 @@ const Home = () => {
                 <Lists getLists={getLists}/>
                 <p className="username">Welcome back {userEmail}</p>
                     {sortedLists?.map((list) => (
-                        <Link style={{textDecoration:'none'}}
+                        <Link 
                             to={`/list/${list.id}`}
                         >
                         <ListContainer key={list.id} lists={list} getLists={getLists} />

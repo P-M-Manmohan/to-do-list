@@ -17,6 +17,15 @@ body{
 
 }
 
+a{
+    text-decoration: none;
+    color: black;
+}
+
+.list-title{
+    padding: 10px;
+}
+
 /* EDIT BUTTON in ListItem */
 
 .edit{
@@ -132,6 +141,16 @@ input{
     height: 25px;
 }
 
+.left-arrow{
+    width: 25px;
+    height: 25px;
+    padding: 10px;
+}
+
+.back-button{
+    display: flex;
+    align-items: center;
+}
 /* Modal */
 
 .overlay{
