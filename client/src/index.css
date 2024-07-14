@@ -76,6 +76,10 @@ a{
     background-color: rgb(108,115,148);
 }
 
+h3{
+    text-transform: capitalize;
+}
+
 /* SING OUT BUTTON in List Header */
 
 .signout{

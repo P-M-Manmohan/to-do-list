@@ -43,8 +43,8 @@ const Auth = () => {
     if(data.detail){
     setError(data.detail)
     }else{
-      setCookie('Email',data.email)
-      setCookie('AuthToken',data.token)
+      setCookie('Email',data.email,{secure:true , sameSite:'none'})
+      setCookie('AuthToken',data.token,{secure:true , sameSite:'none'})
       window.location.reload()
     }
 }

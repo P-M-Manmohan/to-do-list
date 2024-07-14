@@ -80,6 +80,7 @@ const ListModel = ({ mode,setShowModal,getLists,list }) => {
         name="title"
         value={data.title}
         onChange={handleChange}
+        autoComplete='off'
         />
         <br/>  
         <input className={mode} onClick={editMode? editData: postData} type='submit'/>

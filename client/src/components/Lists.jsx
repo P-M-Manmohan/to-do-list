@@ -9,8 +9,8 @@ const Lists = ( { getData,getLists } ) => {
 
 
   const signOut=()=>{
-    removeCookie('Email')
-    removeCookie('AuthToken')
+    removeCookie('Email', { path: '/' })
+    removeCookie('AuthToken', { path: '/' })
     window.location.reload()
   }
     

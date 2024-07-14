@@ -13,11 +13,11 @@ app.use(cors())
 app.use(express.json())
 
 //get all todos
-app.get('/todos/:userEmail', async (req,res)=>{
-    const { userEmail }= req.params
+app.get('/todos/:userEmail/:id', async (req,res)=>{
+    const { userEmail,id }= req.params
 
     try{
-        const result=await pool.query('SELECT * FROM todos WHERE user_email=$1',[userEmail])
+        const result=await pool.query('SELECT * FROM todos WHERE user_email=$1 AND list_id=$2',[userEmail,id])
         res.json(result.rows)
     }catch(err){
         console.log(err)
@@ -25,24 +25,42 @@ app.get('/todos/:userEmail', async (req,res)=>{
 })
 
 
+
+
 //create new todo
 app.post('/todos',async(req,res)=>{
     const { user_email,progress,title,date,listId}=req.body
-    console.log(user_email,progress,title,date,listId)
     const id=uuidv4()
     try{
         const newToDo=await pool.query("INSERT INTO todos (id,user_email,title,progress,date,list_id) VALUES ($1,$2,$3,$4,$5,$6)",[id,user_email,title,progress,date,listId])
+        const result=await pool.query("SELECT progress FROM todos WHERE list_id=$1",[listId])
+        var progresses=result.rows
+        var sum=0;
+        progresses.forEach((progress)=>{
+            sum+=progress.progress
+        })
+        var listProgress=Math.floor(sum/progresses.length)
+        const listUpdate=await pool.query('UPDATE lists SET progress=$1 WHERE id=$2' ,[listProgress,listId])
         res.json(newToDo)
     }catch(err){
         console.error(err)
     }
 })
 
+//edit todo
 app.put('/todos/:id', async (req,res)=>{
     const { id }=req.params
-    const { user_email,progress,title,date}=req.body
+    const { user_email,progress,title,date,listId }=req.body
     try{
         const editTodo=await pool.query('UPDATE todos SET user_email=$1, title=$2, progress=$3, date=$4 WHERE id=$5' ,[user_email,title,progress,date,id])
+        const result=await pool.query("SELECT progress FROM todos WHERE list_id=$1",[listId])
+        var progresses=result.rows
+        var sum=0;
+        progresses.forEach((progress)=>{
+            sum+=progress.progress
+        })
+        var listProgress=Math.floor(sum/progresses.length)
+        const listUpdate=await pool.query('UPDATE lists SET progress=$1 WHERE id=$2' ,[listProgress,listId])
         res.json(editTodo)
     }catch(err){
         console.error(err)
@@ -107,9 +125,23 @@ app.post('/lists/new',async(req,res)=>{
     const id=uuidv4()
     try{
         const new_list=await pool.query("INSERT INTO lists (id,title,progress,user_email,date) VALUES ($1,$2,$3,$4,$5)",[id,title,progress,user_email,date])
+
         res.json(new_list)
     }catch(err){
         console.error(err);
+    }
+})
+
+
+//get list title
+
+app.get('/list/:id',async (req,res)=>{
+    const {id}=req.params
+    try{
+        const result=await pool.query('SELECT title FROM lists WHERE id=$1',[id])
+        res.json(result.rows)
+    }catch(err){
+        console.error(err)
     }
 })
 

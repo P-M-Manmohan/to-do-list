@@ -25,7 +25,6 @@ const Modal = ({ mode,Id,setShowModal,getData,task}) => {
     }))
   }
 
-  console.log(Id)
 
   // create new todo
   const postData=async (e)=>{
@@ -73,7 +72,7 @@ const Modal = ({ mode,Id,setShowModal,getData,task}) => {
     <div className='overlay'>
       <div className='modal'>
         <div className='form-title-container'>
-          <h3>`${mode} new list`</h3>
+          <h3>{`${mode} new list`}</h3>
           <button onClick={()=>setShowModal(false)}>X</button>
         </div>
         <form>
@@ -84,6 +83,7 @@ const Modal = ({ mode,Id,setShowModal,getData,task}) => {
           name="title"
           value={data.title}
           onChange={handleChange}
+          autoComplete="off"
           />
           <br/>  
           <label htmlFor='range'>Drag to select your current progress</label>

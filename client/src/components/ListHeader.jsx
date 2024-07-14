@@ -9,31 +9,42 @@ import { useCookies } from 'react-cookie';
 import { Link } from 'react-router-dom';
 import { FaArrowLeft } from 'react-icons/fa';
 
-const ListHeader = ({ListName,getData}) => {
-  const [cookies, setCookie, removeCookie] = useCookies(null)
-  const [showModal,setShowModal]=useState(false)
+const ListHeader = ({getData,listId}) => {
+  const [cookies, setCookie, removeCookie] = useCookies(null);
+  const [showModal,setShowModal]=useState(false);
+  const [ title,setTitle ] = useState(null);
+
+  const getTitle = async ()=> {       
+    try{
+        const result= await fetch(`${process.env.REACT_APP_SERVERURL}/list/${listId}`);
+        const json = await result.json();
+        setTitle(json[0].title)
+    }catch(err){
+        console.error(err)
+    }
+}
+
 
   const signOut=()=>{
-    removeCookie('Email')
-    removeCookie('AuthToken')
+    removeCookie('Email', { path: '/' })
+    removeCookie('AuthToken', { path: '/' })
     window.location.reload()
   }
 
+  getTitle();
   return (
     <div className='list-header'>
       <div className='back-button'>
       <Link to={'/'}>
       <FaArrowLeft className='left-arrow'/>
       </Link>
-      <h1 className='list-title'>{ListName}</h1>
+      <h1 className='list-title'>{`${title}`}</h1>
       </div>
       <div className='button-container'>
         <button className='create' onClick={()=>setShowModal(true)}> ADD NEW </button>
-        <Link to={'/'}>
         <button className='signout' onClick={signOut}> SIGN OUT</button>
-        </Link>
       </div>
-      {showModal && (<Modal mode='create' setShowModal={setShowModal} getData={getData}/>) }
+      {showModal && (<Modal mode='create' Id={listId} setShowModal={setShowModal} getData={getData}/>) }
     </div>
   )
 }

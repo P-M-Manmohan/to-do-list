@@ -10,7 +10,6 @@ const Home = () => {
     const [cookies, setCookie, removeCookie] = useCookies(null);
     const userEmail = cookies.Email;
     const authToken = cookies.AuthToken;
-    const [tasks, setTasks] = useState(null);
     const [list, setList] = useState(null);
     
     const getLists = async () => {
@@ -20,7 +19,6 @@ const Home = () => {
             );
             const json = await result.json();
             setList(json);
-            console.log(list)
         } catch (err) {
             console.log(err);
         }
@@ -45,11 +43,11 @@ const Home = () => {
                 <Lists getLists={getLists}/>
                 <p className="username">Welcome back {userEmail}</p>
                     {sortedLists?.map((list) => (
-                        <Link 
-                            to={`/list/${list.id}`}
-                        >
-                        <ListContainer key={list.id} lists={list} getLists={getLists} />
+                        <div key={list.id}>
+                        <Link to={`/list/${list.id}`}>
+                        <ListContainer lists={list} getLists={getLists} />
                         </Link>
+                        </div>
                     ))}
 
                     <p className="copyright">© Project 2</p>

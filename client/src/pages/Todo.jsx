@@ -10,11 +10,13 @@ const Todo = () => {
     const userEmail = cookies.Email;
     const authToken = cookies.AuthToken;
     const [tasks, setTasks] = useState(null);
-    const { id }=useParams();
+    const { id}=useParams();
+
+    
     const getData = async () => {
         try {
             const result = await fetch(
-                `${process.env.REACT_APP_SERVERURL}/todos/${userEmail}`
+                `${process.env.REACT_APP_SERVERURL}/todos/${userEmail}/${id}`
             );
             const json = await result.json();
             setTasks(json);
@@ -22,17 +24,17 @@ const Todo = () => {
             console.log(err);
         }
     };
+
     useEffect(() => {
         if (authToken) {
             getData();
         }
     }, []);
-
+    
     const sortedTasks = tasks?.sort(
         (a, b) => new Date(a.date) - new Date(b.date)
     );
-
-
+    
 
   return (
 <div className='app'>
@@ -41,7 +43,7 @@ const Todo = () => {
 
     {authToken && (
         <>
-    <ListHeader ListName='holiday' getData={getData} />
+    <ListHeader listId={id} getData={getData} />
 
     {
     sortedTasks?.map((task) => (
