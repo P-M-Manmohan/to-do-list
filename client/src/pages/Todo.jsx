@@ -25,7 +25,7 @@ const Todo = () => {
         }
     };
 
-    useEffect(() => {
+    useEffect((authToken,getData) => {
         if (authToken) {
             getData();
         }

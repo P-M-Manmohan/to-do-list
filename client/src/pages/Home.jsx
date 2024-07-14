@@ -3,7 +3,6 @@ import  { useEffect, useState } from "react";
 import  { useCookies } from "react-cookie";
 import Lists from "../components/Lists.jsx";
 import ListContainer from "../components/ListContainer.jsx";
-import Todo  from "./Todo.jsx"
 import { Link } from 'react-router-dom'
 
 const Home = () => {
@@ -24,7 +23,7 @@ const Home = () => {
         }
     };
 
-    useEffect(() => {
+    useEffect((authToken,getLists) => {
         if (authToken) {
             getLists();
         }
