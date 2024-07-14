@@ -23,7 +23,7 @@ const Home = () => {
         }
     };
 
-    useEffect((authToken,getLists) => {
+    useEffect(() => {
         if (authToken) {
             getLists();
         }
@@ -43,12 +43,9 @@ const Home = () => {
                 <p className="username">Welcome back {userEmail}</p>
                     {sortedLists?.map((list) => (
                         <div key={list.id}>
-                        <Link to={`/list/${list.id}`}>
                         <ListContainer lists={list} getLists={getLists} />
-                        </Link>
                         </div>
                     ))}
-
                     <p className="copyright">© Project 2</p>
                 </>
             )}

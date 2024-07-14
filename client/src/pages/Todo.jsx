@@ -25,7 +25,7 @@ const Todo = () => {
         }
     };
 
-    useEffect((authToken,getData) => {
+    useEffect(() => {
         if (authToken) {
             getData();
         }
@@ -40,11 +40,10 @@ const Todo = () => {
 <div className='app'>
 
     {!authToken && <Auth />}
-
     {authToken && (
         <>
     <ListHeader listId={id} getData={getData} />
-
+    <p className="username">Welcome back {userEmail}</p>
     {
     sortedTasks?.map((task) => (
         <ListItem key={task.id} task={task} listId={id} getData={getData} />
@@ -52,6 +51,7 @@ const Todo = () => {
     }
     </>
 )}
+<p className="copyright">© Project 2</p>
 </div>
 )
 
